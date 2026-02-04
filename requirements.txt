@@ -1,0 +1,46 @@
+# ============================================
+# RPA Simulate Process - Dependencies
+# ============================================
+
+# Core Robot Framework
+robotframework>=6.1.1
+robotframework-pythonlibcore
+rpaframework
+importlib-metadata>=6.0.0
+
+# FastAPI Server
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.0.0
+
+# WebSocket & Socket.IO
+python-socketio>=5.10.0
+websocket-client>=1.7.0
+
+# HTTP Client
+requests>=2.31.0
+httpx>=0.26.0
+
+# Utilities
+python-dotenv>=1.0.0
+python-multipart>=0.0.6
+
+# ============================================
+# RPA Framework Extensions
+# ============================================
+rpaframework-google
+rpaframework-aws
+rpaframework-pdf
+
+# ============================================
+# Custom EduRPA Packages
+# ============================================
+# edurpa-document
+# edurpa-cloud
+
+# ============================================
+# Custom RPA Packages
+# ============================================
+# rpa-sap-mock-bk
+# rpa-moodle
+# rpa-erpnext

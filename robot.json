@@ -1,0 +1,72 @@
+{
+    "name": "",
+    "tests": [
+        {
+            "name": "Main",
+            "body": [
+                {
+                    "name": "Send Message",
+                    "args": [
+                        "sender=me",
+                        "to=${a_variable}",
+                        "subject=${b_av}",
+                        "message_text=${c_av}"
+                    ],
+                    "assign": [
+                        "${return}="
+                    ]
+                },
+                {
+                    "name": "Create Drive Directory",
+                    "args": [
+                        "folder=${c_av}",
+                        "parent_folder=${b_av}"
+                    ],
+                    "assign": []
+                },
+                {
+                    "name": "Download Drive Files",
+                    "args": [
+                        "source=${c_av}",
+                        "query=${b_av}"
+                    ],
+                    "assign": []
+                }
+            ]
+        }
+    ],
+    "resource": {
+        "imports": [
+            {
+                "type": "LIBRARY",
+                "name": "RPA.Cloud.Google"
+            }
+        ],
+        "variables": [
+            {
+                "name": "${return}",
+                "value": [
+                    "111"
+                ]
+            },
+            {
+                "name": "${c_av}",
+                "value": [
+                    "789"
+                ]
+            },
+            {
+                "name": "${b_av}",
+                "value": [
+                    "456"
+                ]
+            },
+            {
+                "name": "${a_variable}",
+                "value": [
+                    "123"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  rpa-simulate:
+    image: rpa-simulate-process:latest
+    container_name: rpa-simulate-process
+    ports:
+      - "8000:8000"
+    environment:
+      - PROBE_WS_URL=${PROBE_WS_URL:-http://54.252.181.103:8080}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
