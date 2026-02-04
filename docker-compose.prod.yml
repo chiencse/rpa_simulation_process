@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   rpa-simulate:
-    image: ghcr.io/${GITHUB_REPOSITORY:-your-username/rpa-simulate-process}:latest
+    image: ghcr.io/chiencse/rpa_simulation_process:latest
     container_name: rpa-simulate-process
     ports:
       - "8000:8000"
