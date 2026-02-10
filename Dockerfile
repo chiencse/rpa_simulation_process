@@ -1,7 +1,7 @@
 # ============================================
 # RPA Simulate Process - Docker Image
 # ============================================
-FROM python:3.11-slim-bookworm
+FROM python:3.10-slim-bookworm
 
 LABEL maintainer="RPA Team"
 LABEL description="RPA Simulate Process with FastAPI and Robot Framework"
