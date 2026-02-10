@@ -5,9 +5,9 @@
 # Core Robot Framework
 robotframework>=6.1.1
 robotframework-pythonlibcore
-rpaframework
+rpaframework==22.0.0
 importlib-metadata>=6.0.0
-
+rpa-runner==0.1.4
 
 # FastAPI Server
 fastapi>=0.109.0
