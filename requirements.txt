@@ -45,7 +45,3 @@ rpa-sap-mock-bk
 rpa-moodle
 rpa-erpnext
 
-edurpa-cloud
-rpa-sap-mock-bk
-rpa-moodle
-rpa-erpnext
