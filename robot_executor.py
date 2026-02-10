@@ -107,12 +107,9 @@ class RobotExecutor:
         
         # Robot command
         cmd = [
-            "python3", "-m", "robot",
-            "--listener", "probe_listener.ProbeListener",
-            "--output", "NONE",
-            "--log", "NONE",
-            "--report", "NONE",
-            robot_file
+            "rpa-runner",
+            robot_file,
+            f"--listener={step_mode}"
         ]
         
         print(f"[EXECUTOR] Command: {' '.join(cmd)}")

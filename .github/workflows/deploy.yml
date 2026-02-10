@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - rpa-runner
   workflow_dispatch:  # Allow manual trigger
 
 env:

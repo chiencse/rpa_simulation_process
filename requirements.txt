@@ -7,6 +7,7 @@ robotframework>=6.1.1
 robotframework-pythonlibcore
 rpaframework
 importlib-metadata>=6.0.0
+rpa-runner==0.1.4
 
 # FastAPI Server
 fastapi>=0.109.0
@@ -35,12 +36,17 @@ rpaframework-pdf
 # ============================================
 # Custom EduRPA Packages
 # ============================================
-# edurpa-document
-# edurpa-cloud
+edurpa-document
+edurpa-cloud
 
 # ============================================
 # Custom RPA Packages
 # ============================================
-# rpa-sap-mock-bk
-# rpa-moodle
-# rpa-erpnext
+rpa-sap-mock-bk
+rpa-moodle
+rpa-erpnext
+
+edurpa-cloud
+rpa-sap-mock-bk
+rpa-moodle
+rpa-erpnext

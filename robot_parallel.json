@@ -1,0 +1,105 @@
+{
+    "name": "",
+    "tests": [
+        {
+            "name": "Main",
+            "body": [
+                      {
+                    "name": "List Messages",
+                    "args": [
+                        "label_ids=${aaa}",
+                        "user_id=me",
+                        "query=${ccc}"
+                    ],
+                    "assign": []
+                },
+                {
+                    "type": "PARALLEL",
+                    "branches": [
+                        {
+                            "body": [
+                                {
+                                    "name": "Upload Drive File",
+                                    "args": [
+                                        "filename=${ddd}",
+                                        "folder=${bbb}"
+                                    ],
+                                    "assign": []
+                                }
+                            ]
+                        },
+                        {
+                            "body": [
+                               {
+                                    "name": "Upload Drive File",
+                                    "args": [
+                                        "filename=${ddd}",
+                                        "folder=${bbb}"
+                                    ],
+                                    "assign": []
+                                },
+                               {
+                                    "name": "Upload Drive File",
+                                    "args": [
+                                        "filename=${ddd}",
+                                        "folder=${bbb}"
+                                    ],
+                                    "assign": []
+                                },
+                                {
+                                    "name": "Send Message",
+                                    "args": [
+                                        "sender=me",
+                                        "to=${ddd}",
+                                        "subject=${ccc}",
+                                        "message_text=${ddd}"
+                                    ],
+                                    "assign": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Sheet Values",
+                    "args": [
+                        "spreadsheet_id=${ccc}",
+                        "sheet_range=${bbb}",
+                        "values=${aaa}"
+                    ],
+                    "assign": []
+                }
+            ]
+        }
+    ],
+    "resource": {
+        "imports": [
+            {
+                "type": "LIBRARY",
+                "name": "RPA.Cloud.Google"
+            }
+        ],
+        "variables": [
+            {
+                "name": "${}",
+                "value": []
+            },
+            {
+                "name": "${ddd}",
+                "value": []
+            },
+            {
+                "name": "${ccc}",
+                "value": []
+            },
+            {
+                "name": "${bbb}",
+                "value": []
+            },
+            {
+                "name": "${aaa}",
+                "value": []
+            }
+        ]
+    }
+}
