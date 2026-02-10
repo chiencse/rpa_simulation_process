@@ -36,6 +36,7 @@ rpaframework-pdf
 # Custom EduRPA Packages
 # ============================================
 edurpa-document
+packaging==23.2
 edurpa-cloud
 
 # ============================================
