@@ -1,6 +1,14 @@
 # ============================================
 # RPA Simulate Process - Dependencies
 # ============================================
+# --- Resolver anchors  ---
+packaging==23.2
+
+google-auth==2.27.0
+google-auth-oauthlib==0.5.2
+google-api-core==2.15.0
+protobuf==4.25.3
+grpcio==1.60.0
 
 # Core Robot Framework
 robotframework>=6.1.1
@@ -36,7 +44,6 @@ rpaframework-pdf
 # Custom EduRPA Packages
 # ============================================
 edurpa-document
-packaging==23.2
 edurpa-cloud
 
 # ============================================
