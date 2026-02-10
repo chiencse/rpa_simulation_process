@@ -26,9 +26,8 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir "cython<3.0.0" && \
-    pip install --no-cache-dir --no-build-isolation "pyyaml==5.4.1" && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir --no-deps edurpa-cloud
 
 # Copy application code
 COPY . .
