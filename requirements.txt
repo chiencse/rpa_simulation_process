@@ -22,8 +22,8 @@ uvicorn[standard]>=0.27.0
 pydantic>=2.0.0
 
 # WebSocket & Socket.IO
-python-socketio>=5.10.0
-websocket-client>=1.7.0
+# python-socketio>=5.10.0
+# websocket-client>=1.7.0
 
 # HTTP Client
 requests>=2.31.0
@@ -43,8 +43,8 @@ rpaframework-pdf
 # ============================================
 # Custom EduRPA Packages
 # ============================================
-edurpa-document
-edurpa-cloud
+# edurpa-document
+# edurpa-cloud
 
 # ============================================
 # Custom RPA Packages
