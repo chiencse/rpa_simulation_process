@@ -1,0 +1,135 @@
+{
+  "name": "",
+  "tests": [
+    {
+      "name": "Main",
+      "body": [
+        {
+          "name": "Init Gmail",
+          "args": [
+            "token_file=/mnt/c/Users/Admin/Desktop/rpa-simulate-process/devdata/e066d05db8792008400f5ef08413d714b5d0adbe9560ad25a7aa613efa5da84f.json"
+          ],
+          "assign": []
+        },
+        {
+          "type": "PARALLEL",
+          "branches": [
+            {
+              "body": [
+                {
+                  "name": "Init Drive",
+                  "args": [
+                    "token_file=/mnt/c/Users/Admin/Desktop/rpa-simulate-process/devdata/ce4c6e8e6dd2e99b9c94bf0b9292f982f4f646f12f0327531409ff1f33674e08.json"
+                  ],
+                  "assign": []
+                },
+                {
+                  "name": "Create Drive Directory",
+                  "args": [
+                    "folder=${subject_email}",
+                    "parent_folder=${parent_folderPath}"
+                  ],
+                  "assign": []
+                }
+              ]
+            },
+            {
+              "body": [
+                {
+                  "name": "Init Sheets",
+                  "args": [
+                    "token_file_path=/mnt/c/Users/Admin/Desktop/rpa-simulate-process/devdata/f921050fb58151aec66f645e2ff7d34d24d281f3a052cf666c0daf69f06dd4c8.json"
+                  ],
+                  "assign": []
+                },
+                {
+                  "name": "Get Sheet Values",
+                  "args": [
+                    "spreadsheet_id=${sheetsid}",
+                    "sheet_range=${sheet_range}"
+                  ],
+                  "assign": [
+                    "${aaa}="
+                  ]
+                },
+                {
+                  "name": "Send Message",
+                  "args": [
+                    "sender=me",
+                    "to=${email2}",
+                    "subject=${subject_email}",
+                    "message_text=${aaa}"
+                  ],
+                  "assign": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Update Sheet Values",
+          "args": [
+            "spreadsheet_id=${sheetsid}",
+            "sheet_range=${sheet_range_2}",
+            "values=${subject_email}"
+          ],
+          "assign": []
+        }
+      ]
+    }
+  ],
+  "resource": {
+    "imports": [
+      {
+        "type": "LIBRARY",
+        "name": "RPA.Cloud.Google"
+      }
+    ],
+    "variables": [
+      {
+        "name": "${sheet_range_2}",
+        "value": [
+          "Sheet1!A11"
+        ]
+      },
+      {
+        "name": "${parent_folderPath}",
+        "value": [
+          "mydrive/DACN-251"
+        ]
+      },
+      {
+        "name": "${subject_email}",
+        "value": [
+          "TEST PARALLEL"
+        ]
+      },
+      {
+        "name": "${email2}",
+        "value": [
+          "cv662004.cv@gmail.com"
+        ]
+      },
+      {
+        "name": "${sheetsid}",
+        "value": [
+          "110qW664E6oMtcRZ2KO8ZEhYQ71Ct-XQR1In93mnRYCE"
+        ]
+      },
+      {
+        "name": "${sheet_range}",
+        "value": [
+          "Sheet1!A8:F8"
+        ]
+      },
+      {
+        "name": "${bbb}",
+        "value": []
+      },
+      {
+        "name": "${aaa}",
+        "value": []
+      }
+    ]
+  }
+}

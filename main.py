@@ -49,6 +49,7 @@ class RunSimulateRequest(BaseModel):
     robot_code: str  # Robot Framework code (JSON format)
     is_simulate: Optional[bool] = False
     run_type: Optional[str] = "run-all"  # "run-all" | "step-by-step"
+    connection_keys: Optional[list[str]] = []
 
 
 class RunSimulateResponse(BaseModel):
@@ -92,6 +93,7 @@ async def run_simulate(request: RunSimulateRequest, background_tasks: Background
         print(f"[DEBUG] run_type: {request.run_type}")
         print(f"[DEBUG] is_simulate: {request.is_simulate}")
         print(f"[DEBUG] robot_code length: {len(request.robot_code)} chars")
+        print(f"[DEBUG] connection_keys: {request.connection_keys}")
         
         execution_id = str(uuid.uuid4())
         print(f"[DEBUG] Generated execution_id: {execution_id}")
@@ -118,7 +120,8 @@ async def run_simulate(request: RunSimulateRequest, background_tasks: Background
             robot_file,
             request.process_id,
             step_mode,
-            execution_id
+            execution_id,
+            connection_keys=request.connection_keys
         )
         print(f"[DEBUG] Background task added successfully")
         print(f"{'='*60}\n")
