@@ -17,7 +17,7 @@ import uvicorn
 from robot_executor import RobotExecutor
 
 # ===== Configuration =====
-PROBE_WS_URL = os.environ.get("PROBE_WS_URL", "http://54.252.181.103:8080")
+PROBE_WS_URL = os.environ.get("PROBE_WS_URL", "http://172.21.112.1:8080")
 
 # ===== Initialize =====
 # Workspace defaults to project directory (where robot_executor.py is located)

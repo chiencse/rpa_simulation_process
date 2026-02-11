@@ -96,22 +96,46 @@ class RobotExecutor:
         return robot_file_path
     
     
+    
     def setup_connections(
         self,
+        process_id: str,
         connection_keys: list[str]
-    ):
+    ) -> str:
         """
-        Fetch connection credentials from BE and save to files in devdata folder.
+        Fetch connection credentials from BE and save to files in a temporary folder specific to the process.
         
         Args:
+            process_id: Process ID
             connection_keys: List of connection keys
+            
+        Returns:
+            Path to the temporary directory containing credentials
         """
         import json
         import requests
+        import shutil
+        
+        # Create a unique directory for this process execution
+        # Using devdata/process_{process_id} to keep it isolated
+        # Using process_id ensures we can track it, or we could use execution_id if available to handle potential restarts better?
+        # But process_id is fine if we assume one active run per process_id at a time (which we do enforce in main.py)
+        
+        devdata_base = os.path.join(self.workspace, "devdata")
+        process_dir = os.path.join(devdata_base, f"process_{process_id}")
+        
+        # Clean up existing if any (shouldn't happen due to main.py logic but safety first)
+        if os.path.exists(process_dir):
+            try:
+                shutil.rmtree(process_dir)
+            except Exception as e:
+                print(f"[EXECUTOR] Warning: Failed to clean up existing dir {process_dir}: {e}")
+        
+        Path(process_dir).mkdir(parents=True, exist_ok=True)
         
         if not connection_keys:
-            print("[EXECUTOR] No connection keys provided. Skipping credential fetch.")
-            return
+            print("[EXECUTOR] No connection keys provided. Created empty process dir.")
+            return process_dir
 
         print(f"[EXECUTOR] Fetching credentials for keys: {connection_keys}")
         
@@ -147,19 +171,14 @@ class RobotExecutor:
             connections_data = response.json()
             print(f"[EXECUTOR] Received {len(connections_data)} credential files")
             
-            # Ensure devdata directory exists
-            devdata_dir = os.path.join(self.workspace, "devdata")
-            Path(devdata_dir).mkdir(parents=True, exist_ok=True)
-            
             for item in connections_data:
                 file_name = item.get("fileName")
                 data = item.get("data")
                 
                 if file_name and data:
-                    # Force save into devdata directory
-                    # Only take basename to avoid directory traversal
+                    # Force save into process directory
                     safe_filename = os.path.basename(file_name)
-                    file_path = os.path.join(devdata_dir, safe_filename)
+                    file_path = os.path.join(process_dir, safe_filename)
                     
                     with open(file_path, 'w', encoding='utf-8') as f:
                         if isinstance(data, (dict, list)):
@@ -167,12 +186,16 @@ class RobotExecutor:
                         else:
                             f.write(str(data))
                             
-                    print(f"[EXECUTOR] Saved credential: devdata/{safe_filename}")
+                    print(f"[EXECUTOR] Saved credential: {process_dir}/{safe_filename}")
             
-            print(f"[EXECUTOR] All credentials setup successfully")
+            print(f"[EXECUTOR] All credentials setup successfully in {process_dir}")
+            return process_dir
             
         except Exception as e:
             print(f"[EXECUTOR] Error in setup_connections: {str(e)}")
+            # Clean up on failure
+            if os.path.exists(process_dir):
+                shutil.rmtree(process_dir, ignore_errors=True)
             raise e
     
     
@@ -201,14 +224,72 @@ class RobotExecutor:
         print(f"[EXECUTOR] execution_id: {execution_id}")
         print(f"[EXECUTOR] process_id: {process_id}")
         
-        # Setup connections if keys are provided
-        if connection_keys:
-            try:
-                self.setup_connections(connection_keys)
-            except Exception as e:
-                print(f"[EXECUTOR] WARNING: Failed to setup connections: {e}")
-                pass
+        # Setup connections and get credentials directory
+        credentials_dir = None
+        try:
+            # Always setup to get a valid dir, even if empty, to ensure isolation? 
+            # Or only if keys exist? User implementation implied separate folders per user (process).
+            # So let's always create it to handle the "multiple users" requirement properly, 
+            # effectively isolating each run.
+            credentials_dir = self.setup_connections(process_id, connection_keys)
+        except Exception as e:
+            print(f"[EXECUTOR] WARNING: Failed to setup connections: {e}")
+            # If setup failed, we might want to abort or continue. 
+            # If connection_keys provided but failed -> abort? 
+            # Current logic: continue but credentials might be missing.
+            pass
         
+        # Re-create robot file with correct credential path if credentials_dir exists
+        # We need to re-call create_robot_file or move that logic here? 
+        # run_robot calls create_robot_file? No, main.py calls create_robot_file then run_robot.
+        # This is structured awkwardly for this new requirement. 
+        # RunSimulateRequest in main.py calls create_robot_file BEFORE run_robot_async. 
+        # So the file is already created with default devdata path.
+        
+        # To fix this without refactoring main.py heavily:
+        # We should probably pass robot_code explicitly to run_robot OR
+        # Let run_robot regenerate the robot file? 
+        # BUT create_robot_file accepts robot_code. main.py has robot_code.
+        # Changing run_robot signature to accept robot_code allows us to recreate it here.
+        # But wait, main.py passes `robot_file` path. 
+        
+        # BETTER APPROACH:
+        # Since I can't easily change the flow in main.py without risk (it's async task), 
+        # I will stick to: 
+        # 1. run_robot is called.
+        # 2. It sets up credentials in `credentials_dir`.
+        # 3. It READS the existing `robot_file` (JSON), replaces path, and overwrites it (or creates temp one).
+        # OR 
+        # `create_robot_file` was ALREADY called in main.py. 
+        # The prompt says "update file path credential corresponding robotcode".
+        
+        # Let's Modify `robot_file` content with new `credentials_dir` if it exists.
+        if credentials_dir and os.path.exists(robot_file):
+            import json
+            try:
+                with open(robot_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                # Default/Common Linux path to replace
+                linux_path_prefix = "/home/ec2-user/robot/devdata/"
+                
+                # Also replace the default local devdata path if it was already patched by create_robot_file
+                default_local_devdata = os.path.join(self.workspace, "devdata").replace("\\", "/")
+                
+                # New path
+                new_path = credentials_dir.replace("\\", "/") + "/"
+                
+                # Do replacement
+                new_content = content.replace(linux_path_prefix, new_path)
+                new_content = new_content.replace(f"{default_local_devdata}/", new_path)
+                
+                with open(robot_file, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                    
+                print(f"[EXECUTOR] Patched robot file with credentials path: {new_path}")
+            except Exception as e:
+                print(f"[EXECUTOR] Failed to patch robot file with new path: {e}")
+
         print(f"[EXECUTOR] robot_file: {robot_file}")
         print(f"[EXECUTOR] step_mode: {step_mode}")
         print(f"[EXECUTOR] ws_url: {self.ws_url}")
@@ -268,6 +349,16 @@ class RobotExecutor:
         return_code = process.wait()
         print(f"[EXECUTOR] --- Robot Output End ---")
         print(f"[EXECUTOR] Process finished with return code: {return_code}")
+        
+        # Cleanup credentials directory
+        if credentials_dir and os.path.exists(credentials_dir):
+            try:
+                import shutil
+                # Wait a bit to ensure no file locks? usually wait() covers it
+                shutil.rmtree(credentials_dir)
+                print(f"[EXECUTOR] Cleaned up credentials directory: {credentials_dir}")
+            except Exception as e:
+                print(f"[EXECUTOR] Warning: Failed to cleanup credentials dir: {e}")
         
         # Remove from tracking
         if process_id in self.running_processes:
