@@ -21,7 +21,7 @@ class RobotExecutor:
     def __init__(
         self,
         workspace: str = None,  # Default to project directory
-        ws_url: str = "http://54.252.181.103:8080"
+        ws_url: str = "http://130.33.114.1:8080"
     ):
         # Use project directory as default workspace
         self.workspace = workspace if workspace else PROJECT_DIR

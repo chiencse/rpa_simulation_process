@@ -24,7 +24,7 @@ import threading
 ROBOT_LISTENER_API_VERSION = 2
 
 # ===== Configuration =====
-WS_URL = os.environ.get("PROBE_WS_URL", "http://54.252.181.103:8080")
+WS_URL = os.environ.get("PROBE_WS_URL", "http://130.33.114.1:8080")
 SOCKET_PATH = "/robot-report-logs-realtime"
 STEP_MODE = os.environ.get("STEP_MODE", "step")  # "all" = continuous, "step" = wait for FE
 PROCESS_ID = os.environ.get("PROCESS_ID", "Process_F8fZ8GC")  # Process ID for room routing

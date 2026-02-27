@@ -1,0 +1,71 @@
+{
+  "name": "",
+  "tests": [
+    {
+      "name": "Main",
+      "body": [
+                {
+                  "name": "Init Sheets",
+                  "args": [
+                    "token_file=devdata/f921050fb58151aec66f645e2ff7d34d24d281f3a052cf666c0daf69f06dd4c8.json"
+                  ],
+                  "assign": []
+                }
+      ]
+    }
+  ],
+  "resource": {
+    "imports": [
+      {
+        "type": "LIBRARY",
+        "name": "RPA.Cloud.Google"
+      }
+    ],
+    "variables": [
+      {
+        "name": "${sheet_range_2}",
+        "value": [
+          "Sheet1!A11"
+        ]
+      },
+      {
+        "name": "${parent_folderPath}",
+        "value": [
+          "mydrive/DACN-251"
+        ]
+      },
+      {
+        "name": "${subject_email}",
+        "value": [
+          "TEST PARALLEL"
+        ]
+      },
+      {
+        "name": "${email2}",
+        "value": [
+          "cv662004.cv@gmail.com"
+        ]
+      },
+      {
+        "name": "${sheetsid}",
+        "value": [
+          "110qW664E6oMtcRZ2KO8ZEhYQ71Ct-XQR1In93mnRYCE"
+        ]
+      },
+      {
+        "name": "${sheet_range}",
+        "value": [
+          "Sheet1!A8:F8"
+        ]
+      },
+      {
+        "name": "${bbb}",
+        "value": []
+      },
+      {
+        "name": "${aaa}",
+        "value": []
+      }
+    ]
+  }
+}
