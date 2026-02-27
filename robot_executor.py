@@ -300,7 +300,7 @@ class RobotExecutor:
         
         # Environment variables cho listener
         env = os.environ.copy()
-        env["PROBE_WS_URL"] = self.ws_url
+        env["PROBE_BE_WS_URL"] = self.ws_url
         env["STEP_MODE"] = step_mode
         env["PROCESS_ID"] = process_id
         

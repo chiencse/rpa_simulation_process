@@ -9,7 +9,7 @@ LABEL description="RPA Simulate Process with FastAPI and Robot Framework"
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PROBE_WS_URL=http://130.33.114.1:8080
+    PROBE_BE_WS_URL=http://130.33.114.1:8080
 
 # Set working directory
 WORKDIR /app

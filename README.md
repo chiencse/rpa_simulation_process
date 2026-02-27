@@ -129,7 +129,7 @@ Cài đặt dependencies dựa trên robot code.
 
 | Environment Variable | Default | Description |
 |---------------------|---------|-------------|
-| `PROBE_WS_URL` | `http://54.252.181.103:8080` | WebSocket server URL |
+| `PROBE_BE_WS_URL` | `http://54.252.181.103:8080` | WebSocket server URL |
 | `ROBOT_WORKSPACE` | `/tmp/robot_workspace` | Directory for robot files |
 | `LOG_DIR` | `/var/log/robot` | Directory for log files |
 
