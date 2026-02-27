@@ -8,7 +8,7 @@ Hỗ trợ 2 chế độ:
   - "step": Chờ signal `continueStep` từ Frontend sau mỗi step
 
 Environment Variables:
-  - PROBE_WS_URL: WebSocket server URL
+  - PROBE_BE_WS_URL: WebSocket server URL
   - STEP_MODE: "all" hoặc "step"  
   - PROCESS_ID: ID của process để routing WebSocket events
 """
@@ -24,7 +24,7 @@ import threading
 ROBOT_LISTENER_API_VERSION = 2
 
 # ===== Configuration =====
-WS_URL = os.environ.get("PROBE_WS_URL", "http://130.33.114.1:8080")
+WS_URL = os.environ.get("PROBE_BE_WS_URL", "http://130.33.114.1:8080")
 SOCKET_PATH = "/robot-report-logs-realtime"
 STEP_MODE = os.environ.get("STEP_MODE", "step")  # "all" = continuous, "step" = wait for FE
 PROCESS_ID = os.environ.get("PROCESS_ID", "Process_F8fZ8GC")  # Process ID for room routing
