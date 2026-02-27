@@ -15,7 +15,7 @@ robotframework>=6.1.1
 rpaframework==27.7.0
 robotframework-pythonlibcore
 importlib-metadata>=6.0.0
-rpa-runner
+rpa-runner==0.1.6
 # FastAPI Server
 fastapi>=0.109.0
 uvicorn[standard]>=0.27.0
