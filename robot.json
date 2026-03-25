@@ -4,31 +4,24 @@
         {
             "name": "Main",
             "body": [
-                {
-                    "name": "Send Message",
+                    {
+                    "name": "Setup ERPNext Connection",
                     "args": [
-                        "sender=me",
-                        "to=${a_variable}",
-                        "subject=${b_av}",
-                        "message_text=${c_av}"
-                    ],
-                    "assign": [
-                        "${return}="
-                    ]
-                },
-                {
-                    "name": "Create Drive Directory",
-                    "args": [
-                        "folder=${c_av}",
-                        "parent_folder=${b_av}"
+                        "token_file_path=/home/ec2-user/robot/devdata/a48f02ec26b60e9bd7d486074712744d92474fafee1b18b5b173ef836ec0b6a2.json"
                     ],
                     "assign": []
                 },
                 {
-                    "name": "Download Drive Files",
+                    "name": "Init Drive",
                     "args": [
-                        "source=${c_av}",
-                        "query=${b_av}"
+                        "token_file=/home/ec2-user/robot/devdata/ce4c6e8e6dd2e99b9c94bf0b9292f982f4f646f12f0327531409ff1f33674e08.json"
+                    ],
+                    "assign": []
+                },
+                {
+                    "name": "Setup ERPNext Connection",
+                    "args": [
+                        "token_file_path=/home/ec2-user/robot/devdata/a48f02ec26b60e9bd7d486074712744d92474fafee1b18b5b173ef836ec0b6a2.json"
                     ],
                     "assign": []
                 }
@@ -40,32 +33,32 @@
             {
                 "type": "LIBRARY",
                 "name": "RPA.Cloud.Google"
+            },
+            {
+                "type": "LIBRARY",
+                "name": "RPA.ERPNext"
             }
         ],
         "variables": [
             {
-                "name": "${return}",
-                "value": [
-                    "111"
-                ]
+                "name": "${eeee}",
+                "value": []
             },
             {
-                "name": "${c_av}",
-                "value": [
-                    "789"
-                ]
+                "name": "${ddd}",
+                "value": []
             },
             {
-                "name": "${b_av}",
-                "value": [
-                    "456"
-                ]
+                "name": "${cccc}",
+                "value": []
             },
             {
-                "name": "${a_variable}",
-                "value": [
-                    "123"
-                ]
+                "name": "${bbbb}",
+                "value": []
+            },
+            {
+                "name": "${aaaa}",
+                "value": []
             }
         ]
     }
