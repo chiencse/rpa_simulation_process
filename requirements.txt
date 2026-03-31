@@ -26,8 +26,8 @@ pydantic>=2.0.0
 # websocket-client>=1.7.0
 
 # HTTP Client
-requests>=2.31.0
-httpx>=0.26.0
+requests
+httpx
 
 # Utilities
 python-dotenv>=1.0.0
@@ -51,5 +51,5 @@ rpaframework-pdf
 # ============================================
 rpa-sap-mock-bk
 rpa-moodle
-rpa-erpnext
+rpa-erpnext-sml
 

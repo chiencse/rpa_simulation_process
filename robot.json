@@ -4,7 +4,7 @@
         {
             "name": "Main",
             "body": [
-                    {
+                 {
                     "name": "Setup ERPNext Connection",
                     "args": [
                         "token_file_path=/home/ec2-user/robot/devdata/a48f02ec26b60e9bd7d486074712744d92474fafee1b18b5b173ef836ec0b6a2.json"
